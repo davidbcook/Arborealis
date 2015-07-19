@@ -70,7 +70,20 @@ void draw() {
    } else {
      registry.setExtraDelay(rainFreq);
      for (int p = 0; p < strip.getLength(); p++) {
-       strip.setPixel(color(#1AC2FF), p); //rain
+       
+       if(p=0) {
+       	strip.setPixel(color(#1AC2FF), p);
+       	strip.setPixel(color(#0078A3), p+1);
+       } else if (p=strip.getLength()) {
+       	strip.setPixel(color(#0078A3), p-1);
+       	strip.setPixel(color(#1AC2FF), p);
+       } else {
+       	strip.setPixel(color(#0078A3), p-1);
+       	strip.setPixel(color(#1AC2FF), p);
+       	strip.setPixel(color(#0078A3), p+1);
+       }
+
+
      }
    }
  } 
