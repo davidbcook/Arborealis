@@ -15,7 +15,8 @@ TestObserver testObserver;
 
 Minim minim;
 AudioInput drumbeat;
-int drumDecibels = 50; // Adjust for sensitivity 
+int drumDecibels = 50; // Adjust for sensitivity
+int rainFreq = 800; // Adjust for frequency of rain
 
 class BeatListener implements AudioListener {
   private BeatDetect beat;
@@ -67,6 +68,7 @@ void draw() {
        strip.setPixel(color(#ffffff), p); //lightning
      }    
    } else {
+     registry.setExtraDelay(rainFreq);
      for (int p = 0; p < strip.getLength(); p++) {
        strip.setPixel(color(#1AC2FF), p); //rain
      }
