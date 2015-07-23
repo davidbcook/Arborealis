@@ -16,27 +16,8 @@ DeviceRegistry registry;
 
 Minim minim;
 AudioInput drumbeat;
-int drumDecibels = 10; // Adjust for sensitivity
-int rainFreq = 800; // Adjust for frequency of rain
-
-class BeatListener implements AudioListener {
-  private BeatDetect beat;
-  private AudioPlayer source;
-  
-  BeatListener(BeatDetect beat, AudioPlayer source) {
-    this.source = source;
-    this.source.addListener(this);
-    this.beat = beat;
-  }
-  
-  void samples(float[] samps) {
-    beat.detect(source.mix);
-  }
-  
-  void samples(float[] sampsL, float[] sampsR) {
-    beat.detect(source.mix);
-  }
-}
+float drumSensitivity = 0.9; // Adjust for sensitivity
+int rainFreq = 0; // Adjust for frequency of rain
 
 void setup() {
   colorMode(RGB);
@@ -48,7 +29,7 @@ void setup() {
   minim = new Minim(this);
   minim.debugOn();
   
-  drumbeat = minim.getLineIn(Minim.STEREO, 1024); //song input here
+  drumbeat = minim.getLineIn(); 
   
 }
 
@@ -65,13 +46,13 @@ void draw() {
    * at once. Rain should go three pixels at a time. 2nd pixel
    * should be brightest, while the other two are dimmer.
    */
-   if(drumbeat.getGain() > drumDecibels) { 
+   if(drumbeat.mix.level() * 100 > drumSensitivity) { 
+     
      for (int p = 0; p < strip.getLength(); p++) {
-
        strip.setPixel(color(#ffffff), p); //lightning
-
      }    
-   } else {
+   } 
+   else {
      registry.setExtraDelay(rainFreq);
      for (int p = 0; p < strip.getLength(); p++) {
        
