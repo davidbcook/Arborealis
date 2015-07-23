@@ -16,7 +16,7 @@ DeviceRegistry registry;
 
 Minim minim;
 AudioInput drumbeat;
-float drumSensitivity = 0.9; // Adjust for sensitivity
+float drumSensitivity = 5; // Adjust for sensitivity
 int rainFreq = 0; // Adjust for frequency of rain
 
 void setup() {
@@ -54,23 +54,35 @@ void draw() {
    } 
    else {
      registry.setExtraDelay(rainFreq);
-     for (int p = 0; p < strip.getLength(); p++) {
-       
-       //rain
-       if(p==0) { //indexOutofRange logic
-       	strip.setPixel(color(#1AC2FF), p);
-       	strip.setPixel(color(#0078A3), p+1);
-       } else if (p==strip.getLength()-1) {
-       	strip.setPixel(color(#0078A3), p-1);
-       	strip.setPixel(color(#1AC2FF), p);
-       } else {
-       	strip.setPixel(color(#0078A3), p-1);
-       	strip.setPixel(color(#1AC2FF), p);
-       	strip.setPixel(color(#0078A3), p+1);
+//     for (int p = 0; p < strip.getLength(); p++) {
+//       
+//       //rain
+//       if(p==0) { //indexOutofRange logic
+//       	strip.setPixel(color(#1AC2FF), p);
+//       	strip.setPixel(color(#0078A3), p+1);
+//       } else if (p==strip.getLength()-1) {
+//       	strip.setPixel(color(#0078A3), p-1);
+//       	strip.setPixel(color(#1AC2FF), p);
+//       } else {
+//       	strip.setPixel(color(#0078A3), p-1);
+//       	strip.setPixel(color(#1AC2FF), p);
+//       	strip.setPixel(color(#0078A3), p+1);
+//       }
+//     }
+
+       int stripx;
+       for (stripx = 0; stripx < strip.getLength(); stripx++) {
+         strip.setPixel(color(#1AC2FF), stripx);
+         if (stripx > 2) {
+           strip.setPixel(0, stripx - 3);
+         }
        }
-
-
-     }
+       
+       for (stripx = strip.getLength() - 4; stripx < strip.getLength(); stripx++) {
+          strip.setPixel(0, stripx); 
+       }
+     
+     
    }
  } 
 }
