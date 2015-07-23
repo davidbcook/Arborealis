@@ -12,10 +12,11 @@ import ddf.minim.*;
 import ddf.minim.analysis.*;
 
 TestObserver testObserver;
+DeviceRegistry registry;
 
 Minim minim;
 AudioInput drumbeat;
-int drumDecibels = 50; // Adjust for sensitivity
+int drumDecibels = 10; // Adjust for sensitivity
 int rainFreq = 800; // Adjust for frequency of rain
 
 class BeatListener implements AudioListener {
@@ -59,6 +60,7 @@ void draw() {
    List<Strip> strips = registry.getStrips();
    registry.setAntiLog(true);
    
+   Strip strip = strips.get(0);
    /*expected behavior of lightning is that all pixels flash
    * at once. Rain should go three pixels at a time. 2nd pixel
    * should be brightest, while the other two are dimmer.
@@ -74,10 +76,10 @@ void draw() {
      for (int p = 0; p < strip.getLength(); p++) {
        
        //rain
-       if(p=0) { //indexOutofRange logic
+       if(p==0) { //indexOutofRange logic
        	strip.setPixel(color(#1AC2FF), p);
        	strip.setPixel(color(#0078A3), p+1);
-       } else if (p=strip.getLength()-1) {
+       } else if (p==strip.getLength()-1) {
        	strip.setPixel(color(#0078A3), p-1);
        	strip.setPixel(color(#1AC2FF), p);
        } else {
